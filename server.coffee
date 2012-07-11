@@ -27,7 +27,7 @@ passport.use new GitHubStrategy {
   (accessToken, refreshToken, profile, done) ->
 
     process.nextTick ->
-      
+      profile.accessToken = accessToken
       return done(null, profile);
 
 
@@ -67,8 +67,12 @@ app.get '/auth/github',
   (req, res) ->
 
 app.get "/", (req, res) ->
-  console.log "aaa", req.user
-  res.render "index", {user: req.user}
+  
+  user = req.user
+  if not user
+    user = {}
+  console.log "aaa", user, user.accessToken
+  res.render "index", {user: user}
 
 app.get "/logout", (req, res) ->
   req.logout()

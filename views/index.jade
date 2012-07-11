@@ -1,5 +1,5 @@
 doctype 5
-html(lang="en", data-username="#{user.username}")
+html(lang="en", data-username="#{user.username}", data-access-token="#{user.accessToken}")
   head
     meta(charset="utf-8")
     title Githubpoll app
@@ -8,10 +8,24 @@ html(lang="en", data-username="#{user.username}")
     meta(name="author", content="Maryna Aleksandrova")
     link(rel="stylesheet", href="index.css")
   body
-    h1 Start here!
-    a(href="/auth/github") Login
-    br
-    a(href="/logout") Logout
+    div.page#login-page
+      a(href="/auth/github") Login
+      br
+      a(href="/logout") Logout
+    div.page#create-poll-page
+      input#poll-name(placeholder="Name of issue...")
+      textarea#issue-description(rows="4", cols="50", placeholder="Add some description...")
+      select#user-repos
+      span Want to add somebody personally?
+      input#mandatory-voter
+      button#add-mandatory-voter Add
+      div#mandatory-voter-container
+      span#issue-labels Labels:
+      input#issue-label
+      button#add-issue-label Add
+      div#issue-labels-container
+      button#create-poll Create poll
   script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js")
   script(src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js")
   script(src="underscore.js")
+  script(src="app.js")
