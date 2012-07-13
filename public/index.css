@@ -89,3 +89,9 @@ td {
 a img {
   border: none;
 }
+.visible {
+  display: block;
+}
+.invisible {
+  display: none;
+}

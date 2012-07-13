@@ -70,7 +70,7 @@ app.get "/", (req, res) ->
   
   user = req.user
   if not user
-    user = {}
+    user = {username:'guest'}
   console.log "aaa", user, user.accessToken
   res.render "index", {user: user}
 

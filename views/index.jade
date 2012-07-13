@@ -8,23 +8,28 @@ html(lang="en", data-username="#{user.username}", data-access-token="#{user.acce
     meta(name="author", content="Maryna Aleksandrova")
     link(rel="stylesheet", href="index.css")
   body
-    div.page#login-page
+    div.page.visible#login-page
       a(href="/auth/github") Login
-      br
-      a(href="/logout") Logout
-    div.page#create-poll-page
-      input#issue-title(placeholder="Name of issue...")
-      textarea#issue-description(rows="4", cols="50", placeholder="Add some description...")
-      select#user-repos
-      span Want to add somebody personally?
-      input#mandatory-voter
-      button#add-mandatory-voter Add
-      div#mandatory-voter-container
-      span#issue-labels Labels:
-      input#issue-label
-      button#add-issue-label Add
-      div#issue-labels-container
-      button#create-poll Create poll
+    header.invisible#user-info
+        span#welcome Welcome  
+        span#username
+        a#logout(href="/logout") Logout
+    div.page.invisible#create-poll-page
+      section#create-issue-form
+        input#issue-title(placeholder="Name of issue...", required)
+        textarea#issue-description(rows="4", cols="50", placeholder="Add some description...")
+        select#user-repos-select(required)
+          option ---
+        span Want to add somebody personally?
+        input#mandatory-voter
+        button#add-mandatory-voter-button Add
+        div#mandatory-voter-container
+        span#issue-labels Labels:
+        input#issue-label
+        button#add-issue-label-button Add
+        div#issue-labels-container
+        button#create-issue-button Create poll
+    div.page.invisible#poll-page
   script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js")
   script(src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js")
   script(src="underscore.js")
