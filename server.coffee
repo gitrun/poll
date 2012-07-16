@@ -74,6 +74,14 @@ app.get "/", (req, res) ->
   console.log "aaa", user, user.accessToken
   res.render "index", {user: user}
 
+app.get "/:username/:repoName/:number", (req, res) ->
+  
+  user = req.user
+  if not user
+    user = {username:'guest'}
+  console.log "aaa", user, user.accessToken
+  res.render "index", {user: user}
+
 app.get "/logout", (req, res) ->
   req.logout()
   res.redirect "/"

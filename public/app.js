@@ -1,8 +1,11 @@
 $(function(){
+
+// LOGIN AND CREATE POLL PAGE
+
   var userInfo = getLocalStorageData("lsUserInfo"); //----- lsUserInfo - localStorage user (name of string in LS)
   if (userInfo == undefined) {
     if ($("html").attr("data-username") == "guest") {
-      $("#login-page").removeClass("invisible").addClass("visible");
+      $("#login").removeClass("invisible").addClass("visible");
     }
     else {
       var user = $("html").attr("data-username");
@@ -11,22 +14,18 @@ $(function(){
       var userInfo = {"username": user, "accessToken": accessToken};
       localStorage.setItem("lsUserInfo", JSON.stringify(userInfo));
 
-      $("#login-page").removeClass("visible").addClass("invisible");
+      $("#login").removeClass("visible").addClass("invisible");
       $("#user-info").removeClass("invisible").addClass("visible");
       $("#username").html(user);
-
-      showPage("create-poll-page", showUserRepos);
     }
   } else {
     var user = userInfo.username;       
     var accessToken = userInfo.accessToken;
 
-    $("#login-page").removeClass("visible").addClass("invisible");
+    $("#login").removeClass("visible").addClass("invisible");
     $("#user-info").removeClass("invisible").addClass("visible");
     $("#username").html(user);
     $("#welcome").text('Welcome back');
-
-    showPage("create-poll-page", showUserRepos);
   }
 
 	var userReposContainer = $('#user-repos-select');
@@ -64,14 +63,6 @@ $(function(){
     });
 	}
 
-  // function showCreatePollPage() {
-  //   $("#login-page").removeClass("visible").addClass("invisible");
-  //   $("#create-poll-page").removeClass("invisible").addClass("visible");
-    
-
-  //   showUserRepos();
-  // }
-
   $("#create-issue-button").on("click", function() {
     var issueTitle = $("#issue-title").val();
     var issueDescription = $("#issue-description").val();
@@ -86,6 +77,18 @@ $(function(){
     });
   });
 
+  // POLL PAGE
+
+  function buildPollPage(repoFullName, number){
+    $.getJSON("https://api.github.com/repos/" + repoFullName + "/issues/" + number + "?access_token=" + accessToken, function(issueData){
+      var pollTitleContainer = $('#poll-title');
+
+      pollTitleContainer.html(repoFullName.split('/')[1]);
+    });
+  }
+
+  // COMMON FUNCTIONS
+
   function getLocalStorageData(key) {
     var key = localStorage.getItem(key);
     if (key == undefined) {
@@ -95,17 +98,29 @@ $(function(){
     }
   }
 
-  function showPage(pagename, functionname) {
+  function showPage(pagename, functionDeclaration) {
     $(".page.visible").removeClass('visible').addClass('invisible');
 
     $("#" + pagename).removeClass('invisible').addClass('visible');
 
-    functionname();
+    if (functionDeclaration) {
+      functionDeclaration();
+    }
   }
 
-  // page('', function(){
-  //   $('#login-form').removeClass('invisible').addClass('visible');
-  //   $('#user-info').removeClass('visible').addClass('invisible');
-  // });
-  // page.start({ click: false });
+  // ROUTER
+
+  page('/:user/:repoName/:number', function(ctx){
+    var repoFullName = ctx.params.user + "/" + ctx.params.repoName;
+    var number = ctx.params.number;
+
+    showPage("poll-page", function(){
+      buildPollPage(repoFullName, number);
+    });
+  });
+
+  page('', function(){
+    showPage("create-poll-page", showUserRepos);
+  });
+  page.start({ click: false });
 });

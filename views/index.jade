@@ -6,9 +6,9 @@ html(lang="en", data-username="#{user.username}", data-access-token="#{user.acce
     meta(name="description", content="description should be here")
     meta(name="keywords", content="keywords should be here")
     meta(name="author", content="Maryna Aleksandrova")
-    link(rel="stylesheet", href="index.css")
+    link(rel="stylesheet", href="/index.css")
   body
-    div.page.visible#login-page
+    header.page.visible#login
       a(href="/auth/github") Login
     header.invisible#user-info
         span#welcome Welcome  
@@ -30,7 +30,9 @@ html(lang="en", data-username="#{user.username}", data-access-token="#{user.acce
         div#issue-labels-container
         button#create-issue-button Create poll
     div.page.invisible#poll-page
-  script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js")
-  script(src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js")
-  script(src="underscore.js")
-  script(src="app.js")
+      h1#poll-title
+  //- script(src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js")
+  script(src="/underscore.js")
+  script(src="/page.js")
+  script(src="/jquery-1.7.2.min.js")
+  script(src="/app.js")
