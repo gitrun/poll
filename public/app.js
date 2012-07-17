@@ -83,7 +83,43 @@ $(function(){
     $.getJSON("https://api.github.com/repos/" + repoFullName + "/issues/" + number + "?access_token=" + accessToken, function(issueData){
       var pollTitleContainer = $('#poll-title');
 
+      console.log(issueData);
+
       pollTitleContainer.html(repoFullName.split('/')[1]);
+    });
+    $.getJSON("https://api.github.com/repos/" + repoFullName + "/issues/" + number + "/comments?access_token=" + accessToken, function(issueCommentsData){
+      var yesContainer = $('#yes');
+      var noContainer = $('#no');
+      var issueCommentsContainer = $('#issue-comments');
+
+      var yesArray = [];
+      var noArray = [];
+
+      var i = 0;
+      for (; i < issueCommentsData.length; i++) {
+        if (issueCommentsData[i].body == '+1') {
+          console.log(issueCommentsData[i].body);
+          yesArray.push('+1');
+        } else if (issueCommentsData[i].body == '-1') {
+          console.log(issueCommentsData[i].body);
+          noArray.push('-1');
+        }
+      }
+
+      yesContainer.append(yesArray.length);
+      noContainer.append(noArray.length);
+
+      var yesCommentBody = {"body": "+1"};
+      var noCommentBody = {"body": "-1"};
+
+      $('#vote-btns').on('click', 'button', function() {
+        if ($(this).attr('id') == 'yes-btn') {
+          $.post('https://api.github.com/repos/' + repoFullName + '/issues/' + number + '/comments?access_token=' + accessToken, JSON.stringify(yesCommentBody));
+        } else if ($(this).attr('id') == 'no-btn') {
+          $.post('https://api.github.com/repos/' + repoFullName + '/issues/' + number + '/comments?access_token=' + accessToken, JSON.stringify(noCommentBody));
+        }
+      });
+
     });
   }
 

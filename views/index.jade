@@ -31,8 +31,16 @@ html(lang="en", data-username="#{user.username}", data-access-token="#{user.acce
         button#create-issue-button Create poll
     div.page.invisible#poll-page
       h1#poll-title
+      div#yes Yes:
+      div#no No:
+      div#issue-comments
+      div#vote-btns
+        button#yes-btn +1
+        button#no-btn -1
   //- script(src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js")
   script(src="/underscore.js")
   script(src="/page.js")
   script(src="/jquery-1.7.2.min.js")
   script(src="/app.js")
+
+  script#user-social-activity-tpl(type="text/template")
