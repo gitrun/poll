@@ -1,6 +1,6 @@
 $(function(){
 
-// LOGIN AND CREATE POLL PAGE
+// LOGIN
 
   var userInfo = getLocalStorageData("lsUserInfo"); //----- lsUserInfo - localStorage user (name of string in LS)
   if (userInfo == undefined) {
@@ -80,14 +80,22 @@ $(function(){
   // POLL PAGE
 
   function buildPollPage(repoFullName, number){
-    $.getJSON("https://api.github.com/repos/" + repoFullName + "/issues/" + number + "?access_token=" + accessToken, function(issueData){
+    if (accessToken == undefined) {
+      var urlIssue = "https://api.github.com/repos/" + repoFullName + "/issues/" + number;
+      var urlComments = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "/comments";
+    } else {
+      var urlIssue = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "?access_token=" + accessToken;
+      var urlComments = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "/comments?access_token=" + accessToken;
+    }
+
+    $.getJSON(urlIssue, function(issueData){
       var pollTitleContainer = $('#poll-title');
+      var pollDescriptionContainer = $("#poll-description");
 
-      console.log(issueData);
-
-      pollTitleContainer.html(repoFullName.split('/')[1]);
+      pollTitleContainer.html(issueData.title);
+      pollDescriptionContainer.html(issueData.body);
     });
-    $.getJSON("https://api.github.com/repos/" + repoFullName + "/issues/" + number + "/comments?access_token=" + accessToken, function(issueCommentsData){
+    $.getJSON(urlComments, function(issueCommentsData){
       var yesContainer = $('#yes');
       var noContainer = $('#no');
       var issueCommentsContainer = $('#issue-comments');
@@ -108,6 +116,10 @@ $(function(){
 
       yesContainer.append(yesArray.length);
       noContainer.append(noArray.length);
+
+      var data = [{"label": "yes", "value": yesArray.length}, 
+                  {"label": "no", "value": noArray.length}];
+      pie(data);
 
       var yesCommentBody = {"body": "+1"};
       var noCommentBody = {"body": "-1"};
