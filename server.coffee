@@ -20,7 +20,7 @@ passport.deserializeUser (obj, done) ->
 
 
 
- callbackURL = "http://githubpoll.herokuapp.com/auth/github/callback" || "http://localhost:8085/auth/github/callback"
+ callbackURL =  process.env.GITHUB_CALLBACK_URL || "http://localhost:8085/auth/github/callback"
 
 
 passport.use new GitHubStrategy {
