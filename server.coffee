@@ -5,8 +5,8 @@ passport = require "passport"
 
 GitHubStrategy = require('passport-github').Strategy
 
-GITHUB_CLIENT_ID = "041e33b4c176a007f627"
-GITHUB_CLIENT_SECRET = "f70b6f1468f4ef87ba18d5587a2be6d7c6c4ae98";
+GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID || "041e33b4c176a007f627"
+GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET || "f70b6f1468f4ef87ba18d5587a2be6d7c6c4ae98";
 
 app = module.exports = express.createServer()
 
