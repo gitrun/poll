@@ -1,35 +1,31 @@
 $(function(){
 
 // LOGIN
+  function checkIfUserLoggedIn() {
+    var userInfo = getLocalStorageData("lsUserInfo"); //----- lsUserInfo - localStorage user (name of string in LS)
+    if (userInfo == undefined) {
+      if ($("html").attr("data-username") == "guest") {
+        return "guest";
+      }
+      else {
+        var user = $("html").attr("data-username");
+        window.accessToken = $("html").attr("data-access-token");
 
-  var userInfo = getLocalStorageData("lsUserInfo"); //----- lsUserInfo - localStorage user (name of string in LS)
-  if (userInfo == undefined) {
-    if ($("html").attr("data-username") == "guest") {
-      $("#login").removeClass("invisible").addClass("visible");
+        var userInfo = {"username": user, "accessToken": accessToken};
+        localStorage.setItem("lsUserInfo", JSON.stringify(userInfo));
+
+        return user;
+      }
+    } else {
+      var user = userInfo.username;       
+      window.accessToken = userInfo.accessToken;
+
+      return user;
     }
-    else {
-      var user = $("html").attr("data-username");
-      var accessToken = $("html").attr("data-access-token");
-
-      var userInfo = {"username": user, "accessToken": accessToken};
-      localStorage.setItem("lsUserInfo", JSON.stringify(userInfo));
-
-      $("#login").removeClass("visible").addClass("invisible");
-      $("#user-info").removeClass("invisible").addClass("visible");
-      $("#username").html(user);
-    }
-  } else {
-    var user = userInfo.username;       
-    var accessToken = userInfo.accessToken;
-
-    $("#login").removeClass("visible").addClass("invisible");
-    $("#user-info").removeClass("invisible").addClass("visible");
-    $("#username").html(user);
-    $("#welcome").text('Welcome back');
   }
 
 	var userReposContainer = $('#user-repos-select');
-	function showUserRepos(){
+	function showUserRepos() {
 		$.getJSON("https://api.github.com/user/repos?access_token=" + accessToken, function(userRepos){
 			var html = "";
 
@@ -79,15 +75,7 @@ $(function(){
 
   // POLL PAGE
 
-  function buildPollPage(repoFullName, number){
-    if (accessToken == undefined) {
-      var urlIssue = "https://api.github.com/repos/" + repoFullName + "/issues/" + number;
-      var urlComments = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "/comments";
-    } else {
-      var urlIssue = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "?access_token=" + accessToken;
-      var urlComments = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "/comments?access_token=" + accessToken;
-    }
-
+  function buildPollPage(repoFullName, number, urlIssue, urlComments){
     $.getJSON(urlIssue, function(issueData){
       var pollTitleContainer = $('#poll-title');
       var pollDescriptionContainer = $("#poll-description");
@@ -162,13 +150,43 @@ $(function(){
     var repoFullName = ctx.params.user + "/" + ctx.params.repoName;
     var number = ctx.params.number;
 
+    var userStatus = checkIfUserLoggedIn();
+    if (userStatus == 'guest') {
+      $("#login").removeClass("invisible").addClass("visible");
+
+      var urlIssue = "https://api.github.com/repos/" + repoFullName + "/issues/" + number;
+      var urlComments = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "/comments";
+
+      $("#vote-btns").removeClass("visible").addClass("invisible");
+    } else {
+      $("#login").removeClass("visible").addClass("invisible");
+      $("#user-info").removeClass("invisible").addClass("visible");
+      $("#username").html(userStatus);
+
+      var urlIssue = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "?access_token=" + accessToken;
+      var urlComments = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "/comments?access_token=" + accessToken;
+
+      $("#vote-btns").removeClass("invisible").addClass("visible");
+    }
+
     showPage("poll-page", function(){
-      buildPollPage(repoFullName, number);
+      buildPollPage(repoFullName, number, urlIssue, urlComments);
     });
   });
 
   page('', function(){
-    showPage("create-poll-page", showUserRepos);
+    var userStatus = checkIfUserLoggedIn();
+    if (userStatus == 'guest') {
+      $("#login").removeClass("invisible").addClass("visible");
+    } else {
+      $("#login").removeClass("visible").addClass("invisible");
+      $("#user-info").removeClass("invisible").addClass("visible");
+      $("#username").html(userStatus);
+
+      showPage("create-poll-page", showUserRepos);
+    }
   });
+
   page.start({ click: false });
+  
 });

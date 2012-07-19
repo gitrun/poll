@@ -8,8 +8,8 @@ html(lang="en", data-username="#{user.username}", data-access-token="#{user.acce
     meta(name="author", content="Maryna Aleksandrova")
     link(rel="stylesheet", href="/index.css")
   body
-    header.page.visible#login
-      a(href="/auth/github") Login
+    header.visible#login
+      a(href="/auth") Login
     header.invisible#user-info
         span#welcome Welcome  
         span#username

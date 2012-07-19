@@ -1,6 +1,5 @@
 express = require "express"
 stylus  = require "stylus"
-nib     = require "nib"
 passport = require "passport"
 
 GitHubStrategy = require('passport-github').Strategy
@@ -20,7 +19,7 @@ passport.deserializeUser (obj, done) ->
 
 
 
- callbackURL =  process.env.GITHUB_CALLBACK_URL || "http://localhost:8085/auth/github/callback"
+ callbackURL =  process.env.GITHUB_CALLBACK_URL || "http://localhost:8085/auth/callback"
 
 
 passport.use new GitHubStrategy {
@@ -41,8 +40,7 @@ compile = (str, path) ->
     .define("url", stylus.url({ paths: [__dirname + "/public"] }))
     .set("filename", path)
     .set("warn", true)
-    .set("compress", false)   # compress CSS
-    .use(nib())    
+    .set("compress", false)   # compress CSS 
 
 
 app.configure ->
@@ -66,7 +64,7 @@ app.configure ->
   app.use(express.static(__dirname + '/public'));
 
 
-app.get '/auth/github',
+app.get '/auth',
   passport.authenticate('github', scope: 'repo'),
   (req, res) ->
 
@@ -90,9 +88,10 @@ app.get "/logout", (req, res) ->
   req.logout()
   res.redirect "/"
 
-app.get '/auth/github/callback', 
+app.get '/auth/callback', 
   passport.authenticate('github', { failureRedirect: '/login' }),
   (req, res) ->
+    console.log "auth callback"
     res.redirect('/');
 
 port = process.env.PORT || 8085
