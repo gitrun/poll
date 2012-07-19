@@ -91,6 +91,6 @@ app.get '/auth/github/callback',
   (req, res) ->
     res.redirect('/');
 
-
-app.listen 8085
+port = process.env.PORT || 8085
+app.listen port
 console.log "server started on port 8085. Open http://localhost:8085 in your browser"
