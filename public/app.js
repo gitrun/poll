@@ -93,21 +93,28 @@ $(function(){
 
       var i = 0;
       for (; i < issueCommentsData.length; i++) {
-        if (issueCommentsData[i].body == '+1') {
-          console.log(issueCommentsData[i].body);
+        if (_.str.include(issueCommentsData[i].body, "+1")) {
           yesArray.push('+1');
-        } else if (issueCommentsData[i].body == '-1') {
-          console.log(issueCommentsData[i].body);
+        } else if (_.str.include(issueCommentsData[i].body, "-1")) {
           noArray.push('-1');
         }
       }
 
-      yesContainer.append(yesArray.length);
-      noContainer.append(noArray.length);
+      if ((yesArray.length == 0) && (noArray.length == 0)) {
+        $("#no-results").removeClass("invisible").addClass("visible");
+        $("#results").removeClass("visible").addClass("invisible");
+        $("#vote-btns").removeClass("invisible").addClass("visible");
+      } else {
+        yesContainer.append(yesArray.length);
+        noContainer.append(noArray.length);
 
-      var data = [{"label": "yes", "value": yesArray.length}, 
-                  {"label": "no", "value": noArray.length}];
-      pie(data);
+        var data = [{ key : "Poll Results",
+                      values : [{"label": "yes", "value": yesArray.length}, 
+                                {"label": "no", "value": noArray.length}]
+                    }];
+
+        pie(data, "#pie-chart");
+      }
 
       var yesCommentBody = {"body": "+1"};
       var noCommentBody = {"body": "-1"};

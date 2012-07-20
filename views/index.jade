@@ -7,6 +7,7 @@ html(lang="en", data-username="#{user.username}", data-access-token="#{user.acce
     meta(name="keywords", content="keywords should be here")
     meta(name="author", content="Maryna Aleksandrova")
     link(rel="stylesheet", href="/index.css")
+    link(href="/nv.d3.css", rel="stylesheet", type="text/css")
   body
     header.visible#login
       a(href="/auth") Login
@@ -32,19 +33,26 @@ html(lang="en", data-username="#{user.username}", data-access-token="#{user.acce
     div.page.invisible#poll-page
       h1#poll-title
       div#poll-description
-      div#yes Yes:
-      div#no No:
+      div#no-results.invisible Nobody voted yet. Be the first!
+      div#results
+        div#yes Yes:
+        div#no No:
       div#issue-comments
       div#vote-btns
         button#yes-btn +1
         button#no-btn -1
-      div#pie-chart
+      svg#pie-chart
   //- script(src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js")
   script(src="/underscore.js")
+  script(src="/underscore.string.min.js")
   script(src="/page.js")
   script(src="/jquery-1.7.2.min.js")
-  script(src="/d3.v2.min.js")
+  script(src="/d3.v2.js")
+  script(src="/nv.d3.js")
+  script(src="/legend.js")
   script(src="/pie.js")
+  script(src="/pieChart.js")
+  script(src="/chart.js")
   script(src="/app.js")
 
   script#user-social-activity-tpl(type="text/template")
