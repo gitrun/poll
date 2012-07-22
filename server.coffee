@@ -19,7 +19,7 @@ passport.deserializeUser (obj, done) ->
 
 
 
- callbackURL =  process.env.GITHUB_CALLBACK_URL || "http://localhost:8085/auth/callback"
+callbackURL =  process.env.GITHUB_CALLBACK_URL || "http://localhost:8085/auth/callback"
 
 
 passport.use new GitHubStrategy {
@@ -73,7 +73,6 @@ app.get "/", (req, res) ->
   user = req.user
   if not user
     user = {username:'guest'}
-  console.log "aaa", user, user.accessToken
   res.render "index", {user: user}
 
 app.get "/:username/:repoName/:number", (req, res) ->
@@ -81,7 +80,6 @@ app.get "/:username/:repoName/:number", (req, res) ->
   user = req.user
   if not user
     user = {username:'guest'}
-  console.log "aaa", user, user.accessToken
   res.render "index", {user: user}
 
 app.get "/logout", (req, res) ->

@@ -14,6 +14,8 @@ $(function(){
         var userInfo = {"username": user, "accessToken": accessToken};
         localStorage.setItem("lsUserInfo", JSON.stringify(userInfo));
 
+        mixpanel.track("User Logged-In");
+
         return user;
       }
     } else {
@@ -71,6 +73,8 @@ $(function(){
     $.post('https://api.github.com/repos/' + issueRepoFullname + '/issues?access_token=' + accessToken, JSON.stringify(issueData), function(data) {
       console.log(data);
     });
+
+    mixpanel.track("Poll Created");
   });
 
   // POLL PAGE
@@ -122,8 +126,10 @@ $(function(){
       $('#vote-btns').on('click', 'button', function() {
         if ($(this).attr('id') == 'yes-btn') {
           $.post('https://api.github.com/repos/' + repoFullName + '/issues/' + number + '/comments?access_token=' + accessToken, JSON.stringify(yesCommentBody));
+          mixpanel.track("Voted +1");
         } else if ($(this).attr('id') == 'no-btn') {
           $.post('https://api.github.com/repos/' + repoFullName + '/issues/' + number + '/comments?access_token=' + accessToken, JSON.stringify(noCommentBody));
+          mixpanel.track("Voted -1");
         }
       });
 
@@ -179,6 +185,7 @@ $(function(){
     showPage("poll-page", function(){
       buildPollPage(repoFullName, number, urlIssue, urlComments);
     });
+    mixpanel.track("Poll Page Loaded");
   });
 
   page('', function(){
@@ -191,6 +198,7 @@ $(function(){
       $("#username").html(userStatus);
 
       showPage("create-poll-page", showUserRepos);
+      mixpanel.track("Create Poll Page Loaded");
     }
   });
 
