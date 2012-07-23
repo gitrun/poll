@@ -1,5 +1,6 @@
 express = require "express"
 stylus  = require "stylus"
+nib = require "nib"
 passport = require "passport"
 
 GitHubStrategy = require('passport-github').Strategy
@@ -40,8 +41,8 @@ compile = (str, path) ->
     .define("url", stylus.url({ paths: [__dirname + "/public"] }))
     .set("filename", path)
     .set("warn", true)
-    .set("compress", false)   # compress CSS 
-
+    .set("compress", false)
+    .use(nib())
 
 app.configure ->
   # stylus middleware

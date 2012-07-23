@@ -57,7 +57,7 @@
     filter: alpha(opacity=0);
     opacity: 0;
     left: 100%;
-    width: 98%;
+    width: 740px;
     position: absolute;
     -webkit-transition: all .25s;
     -moz-transition: all .25s;
@@ -65,12 +65,13 @@
     -ms-transition: all .25s;
     transition: all .25s;
 }
-.repo .page.active {
+.repo .page.visible {
     left: 1%!important;
     -ms-filter: "alpha(opacity=100)";
     filter: alpha(opacity=100);
     opacity: 1;
     display: block;
+    padding: 10px;
 }
 .repo .page.left {
     left: -100%}

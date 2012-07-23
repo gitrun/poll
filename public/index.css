@@ -1,3 +1,209 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-family: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+body {
+  line-height: 1;
+  color: #000;
+  background: #fff;
+}
+ol,
+ul {
+  list-style: none;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  vertical-align: middle;
+}
+caption,
+th,
+td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+a img {
+  border: none;
+}
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.repo {
+  width: 740px;
+}
+.page {
+  position: relative;
+}
+.page-container {
+  margin-bottom: 15px;
+  padding: 3px;
+  background: #eee;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+#create-issue-form {
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  position: relative;
+}
+.title {
+  font: 13px Helvetica, arial, freesans, clean, sans-serif;
+  position: relative;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+#issue-title {
+  width: 49%;
+  font-size: 16px;
+  font-weight: bold;
+  color: #444;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-right: 5px;
+  padding: 6px;
+  color: #666;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+#issue-description {
+  margin-top: 15px;
+}
+.info-bar {
+  display: inline-block;
+  margin: 15px 0 -10px;
+  width: 100%;
+  padding: 10px 10px 4px;
+  border: 1px solid #e5e5e5;
+  border-left: none;
+  border-right: none;
+  background: whiteSmoke;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 9px;
+}
+textarea {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px;
+  height: 150px;
+  font-size: 12px;
+}
+button#create-issue-button {
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.40);
+  background: #8add6d;
+  background: -moz-linear-gradient(#8add6d, #60b044);
+  background: -webkit-linear-gradient(#8add6d, #60b044);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#8add6d',endColorstr='#60b044')";
+  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.20);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.20);
+  display: inline-block;
+  padding: 8px 15px;
+  line-height: normal;
+  position: relative;
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid;
+  border-color: #74bb5a;
+  border-bottom-color: #509338;
+  position: absolute;
+  right: 5px;
+}
+#user-repos-select {
+  width: 49%;
+  font-size: 16px;
+  font-weight: bold;
+  color: #444;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 6px 6px;
+  color: #666;
+  background-repeat: no-repeat;
+  background-position: right center;
+  border-color: rgba(102,102,102,0.15);
+}
+#user-repos-select option {
+  font-size: 12px;
+  font-weight: normal;
+}
 .visible {
   display: block;
 }

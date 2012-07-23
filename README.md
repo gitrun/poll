@@ -1,7 +1,8 @@
 githubpoll
 ==========
 
-Experimental poll project
+Poll for Github issues.
+(gitpoll.com)
 
 LICENCE
 ==========
