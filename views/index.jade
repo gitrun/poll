@@ -38,7 +38,7 @@ html(lang="en", data-username="#{user.username}", data-access-token="#{user.acce
               input#issue-label
               button#add-issue-label-button Add
               div#issue-labels-container
-        button#create-issue-button Create poll
+        button#create-issue-button.btn Create poll
       div.page.invisible#poll-page
         div.page-container
           section.page-content
@@ -50,9 +50,10 @@ html(lang="en", data-username="#{user.username}", data-access-token="#{user.acce
               div#no No:
             div#issue-comments
             div#vote-btns
-              button#yes-btn +1
-              button#no-btn -1
-            svg#pie-chart
+              button#yes-btn.btn +1
+              button#no-btn.btn -1
+            div#chart-panel  
+              svg#pie-chart
     footer#app-footer
       div.container
         a(href="https://mixpanel.com/f/partner")

@@ -1,6 +1,6 @@
 window.pie = function(data, container){
   nv.addGraph(function() {
-      var width = 300,
+      var width = 400,
           height = 300;
 
       var chart = nv.models.pieChart()

@@ -199,7 +199,7 @@ textarea {
   height: 150px;
   font-size: 12px;
 }
-button#create-issue-button {
+.btn {
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.40);
   background: #8add6d;
@@ -220,6 +220,8 @@ button#create-issue-button {
   border: 1px solid;
   border-color: #74bb5a;
   border-bottom-color: #509338;
+}
+button#create-issue-button {
   position: absolute;
   right: 5px;
 }
@@ -240,6 +242,10 @@ button#create-issue-button {
 #user-repos-select option {
   font-size: 12px;
   font-weight: normal;
+}
+#chart-panel {
+  margin: 0 auto;
+  width: 400px;
 }
 .visible {
   display: block;
