@@ -32,6 +32,7 @@ passport.use new GitHubStrategy {
 
     process.nextTick ->
       profile.accessToken = accessToken
+      profile.avatar = profile._json.avatar_url
       return done(null, profile);
 
 
@@ -74,6 +75,7 @@ app.get "/", (req, res) ->
   user = req.user
   if not user
     user = {username:'guest'}
+  console.log "user", user  
   res.render "index", {user: user}
 
 app.get "/:username/:repoName/:number", (req, res) ->
@@ -90,7 +92,6 @@ app.get "/logout", (req, res) ->
 app.get '/auth/callback', 
   passport.authenticate('github', { failureRedirect: '/login' }),
   (req, res) ->
-    console.log "auth callback"
     res.redirect('/');
 
 port = process.env.PORT || 8085
