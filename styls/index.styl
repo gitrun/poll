@@ -6,20 +6,23 @@ global-reset();
 html
 body
   background-color: white;  
-
+  font-family: Helvetica,arial,freesans,clean,sans-serif;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
 .container
-  width: 920px;
+  width: 740px;
   margin: 0 auto;
-
 header.container
   margin-top: 10px;
   margin-bottom: 20px;
   & a
   & a:visited
     white-space: nowrap;
-    color: #4183C4;
     text-decoration: none;
-
+    color: #333;
+  & a:hover
+    color: white;
 #app-footer
   border-top: 1px solid #E0E0E0;
   position: absolute;
@@ -28,9 +31,12 @@ header.container
   height: 100px;
   & .container
     margin-top: 20px;
+    & p
+      display: inline-block;
+      vertical-align: top;
+      margin: 10px 10px 0 0;
 #username
-  color: #222;
-  transition: color .15s ease-in 0;
+  color: #4183C4;
   line-height: 22px;
   font-weight: bold;
   text-shadow: 0 1px 0 white;
@@ -99,13 +105,19 @@ textarea
   padding: 8px 15px;
   line-height: normal;
   position: relative;
-  font-family: Helvetica,arial,freesans,clean,sans-serif;
   font-size: 12px;
   font-weight: bold;
   border-radius: 3px;
   border: 1px solid;
   border-color: #74BB5A;
   border-bottom-color: #509338;
+  &:hover
+    background: #69D344;
+    background: -moz-linear-gradient(#69D344,#4C8B36);
+    background: -webkit-linear-gradient(#69D344,#4C8B36);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#69d344',endColorstr='#4c8b36')";
+    border-color: #4A993E;
+    color: white;
 button#create-issue-button
   position: absolute;
   right: 5px;
@@ -123,9 +135,56 @@ button#create-issue-button
   & option
     font-size: 12px;
     font-weight: normal;
+#user-info
+  color: #666;
+  font-size: 16px;
+  width: 100%;
+  position: relative;
+#login, #logout
+  color: #333;
+  position: absolute;
+  padding: 0 10px 0 10px;
+  font-family: Helvetica,arial,freesans,clean,sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 24px;
+  text-shadow: 0 1px 0 white;
+  white-space: nowrap;
+  border: 1px solid #D4D4D4;
+  border-bottom-color: #BCBCBC;
+  border-radius: 3px;
+  background: #FAFAFA;
+  background: -moz-linear-gradient(#FAFAFA,#EAEAEA);
+  background: -webkit-linear-gradient(#FAFAFA,#EAEAEA);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa',endColorstr='#eaeaea')";
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+#logout
+  right: 5px;
+  bottom: -4px;
+#login:hover, #logout:hover
+  color: white;
+  text-decoration: none;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+  border-color: #518CC6;
+  border-bottom-color: #2A65A0;
+  background: #599BDC;
+  background: -moz-linear-gradient(#599BDC,#3072B3);
+  background: -webkit-linear-gradient(#599BDC,#3072B3);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#599bdc',endColorstr='#3072b3')";
 #chart-panel
   margin: 0 auto;
-  width: 400px;    
+  width: 400px;
+#poll-description
+  margin-top: 10px;
+  margin-bottom: 10px;
+#yes, #no
+  font-weight: bold;
 .visible
   display: block;
 .invisible

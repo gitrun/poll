@@ -19,7 +19,7 @@ $(function(){
         return user;
       }
     } else {
-      var user = userInfo.username;       
+      var user = userInfo.username;     
       window.accessToken = userInfo.accessToken;
 
       return user;
@@ -85,7 +85,13 @@ $(function(){
       var pollDescriptionContainer = $("#poll-description");
 
       pollTitleContainer.html(issueData.title);
-      pollDescriptionContainer.html(issueData.body);
+      var issueDescriptionStringsArray = issueData.body.split("\n");
+      var html = "";
+      var i = 0;
+      for (; i < issueDescriptionStringsArray.length; i++) {
+        html += "<p>" + issueDescriptionStringsArray[i] + "</p>"
+      }
+      pollDescriptionContainer.html(html);
     });
     $.getJSON(urlComments, function(issueCommentsData){
       var yesContainer = $('#yes');

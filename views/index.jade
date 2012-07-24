@@ -16,10 +16,9 @@ html(lang="en", data-username="#{user.username}", data-access-token="#{user.acce
     header.container
       div#user-info.invisible
         span#welcome Welcome  
-        span#username  
-        a#logout(href="/logout") Logout
-      div#login.visible
-        a(href="/auth") Login
+        span#username
+        button#logout(href="/logout") Logout
+      a#login.visible(href="/auth") Login
     div.container
       div.page.invisible#create-poll-page
         div.page-container
@@ -56,8 +55,11 @@ html(lang="en", data-username="#{user.username}", data-access-token="#{user.acce
               svg#pie-chart
     footer#app-footer
       div.container
+        p GitPoll.com is not affiliated with GitHub
         a(href="https://mixpanel.com/f/partner")
           img(src="https://mixpanel.com/site_media/images/partner/badge_light.png", alt="Mobile Analytics")
+  a(href="https://github.com/marynaaleksandrova/githubpoll")
+    img(style="position: absolute; top: 0; right: 0; border: 0;", src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png", alt="Fork me on GitHub")
   script(src="/underscore.js")
   script(src="/underscore.string.min.js")
   script(src="/page.js")
