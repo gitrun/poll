@@ -4,7 +4,7 @@ html(lang="en", data-username="#{user.username}", data-access-token="#{user.acce
     meta(charset="utf-8")
     title GitPoll - vote on GitHub issue
     meta(name="description", content="Application for voting on GitHub issues")
-    meta(name="keywords", content="github, issue, vote, poll")
+    meta(name="keywords", content="github, issue, vote, poll, +1, -1")
     meta(name="author", content="Maryna Aleksandrova")
     link(rel="stylesheet", href="/index.css")
     link(href="/nv.d3.css", rel="stylesheet", type="text/css")
@@ -13,8 +13,8 @@ html(lang="en", data-username="#{user.username}", data-access-token="#{user.acce
       a[f]=[]:f="mixpanel";g.people=g.people||[];h="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config people.set people.increment".split(" ");for(e=0;e<h.length;e++)d(g,h[e]);a._i.push([b,c,f])};a.__SV=1.1;window.mixpanel=a})(document,window.mixpanel||[]);
       mixpanel.init("90adfdd8359f5e3597eea0acb16e5557");
     script
-      var GP = {};
-      GP.user =  {
+      var gp = {};
+      gp.user =  {
         username: '#{user.username}',
         avatar: '#{user.avatar}',
         profileUrl: '#{user.profileUrl}',

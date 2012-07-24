@@ -6,7 +6,10 @@ window.pie = function(data, container){
       var chart = nv.models.pieChart()
           .x(function(d) { return d.label })
           .y(function(d) { return d.value })
-          //.showLabels(false)
+          //.tooltips(false)
+          .showLabels(true)
+          .showLegend(false)
+          //.labelThreshold(0.05)
           .color(d3.scale.category10().range())
           .width(width)
           .height(height);
