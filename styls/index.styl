@@ -2,16 +2,47 @@
 global-reset();
 *
   box-sizing: border-box;
-.repo
-  width: 740px;
+
+html
+body
+  background-color: white;  
+
+.container
+  width: 920px;
+  margin: 0 auto;
+
+header.container
+  margin-top: 10px;
+  margin-bottom: 20px;
+  & a
+  & a:visited
+    white-space: nowrap;
+    color: #4183C4;
+    text-decoration: none;
+
+#app-footer
+  border-top: 1px solid #E0E0E0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  & .container
+    margin-top: 20px;
+#username
+  color: #222;
+  transition: color .15s ease-in 0;
+  line-height: 22px;
+  font-weight: bold;
+  text-shadow: 0 1px 0 white;
 .page
   position: relative;
+  width: 740px;
 .page-container
   margin-bottom: 15px;
   padding: 3px;
   background: #EEE;
   border-radius: 4px;
-#create-issue-form
+.page-content
   padding: 10px;
   background: white;
   border: 1px solid #DDD;

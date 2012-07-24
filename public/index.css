@@ -94,11 +94,48 @@ a img {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.repo {
-  width: 740px;
+html,
+body {
+  background-color: #fff;
+}
+.container {
+  width: 920px;
+  margin: 0 auto;
+}
+header.container {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+header.container a,
+header.container a:visited {
+  white-space: nowrap;
+  color: #4183c4;
+  text-decoration: none;
+}
+#app-footer {
+  border-top: 1px solid #e0e0e0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+}
+#app-footer .container {
+  margin-top: 20px;
+}
+#username {
+  color: #222;
+  -webkit-transition: color 0.15s ease-in 0;
+  -moz-transition: color 0.15s ease-in 0;
+  -o-transition: color 0.15s ease-in 0;
+  -ms-transition: color 0.15s ease-in 0;
+  transition: color 0.15s ease-in 0;
+  line-height: 22px;
+  font-weight: bold;
+  text-shadow: 0 1px 0 #fff;
 }
 .page {
   position: relative;
+  width: 740px;
 }
 .page-container {
   margin-bottom: 15px;
@@ -107,7 +144,7 @@ a img {
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
-#create-issue-form {
+.page-content {
   padding: 10px;
   background: #fff;
   border: 1px solid #ddd;

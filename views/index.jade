@@ -2,32 +2,32 @@ doctype 5
 html(lang="en", data-username="#{user.username}", data-access-token="#{user.accessToken}")
   head
     meta(charset="utf-8")
-    title Githubpoll app
-    meta(name="description", content="description should be here")
-    meta(name="keywords", content="keywords should be here")
+    title GitPoll - vote on GitHub issue
+    meta(name="description", content="Application for voting on GitHub issues")
+    meta(name="keywords", content="github, issue, vote, poll")
     meta(name="author", content="Maryna Aleksandrova")
     link(rel="stylesheet", href="/index.css")
     link(href="/nv.d3.css", rel="stylesheet", type="text/css")
-    //- link(href="/repo.css", rel="stylesheet", type="text/css")
     script
       (function(c,a){var b,d,h,e;b=c.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===c.location.protocol?"https:":"http:")+'//api.mixpanel.com/site_media/js/api/mixpanel.2.js';d=c.getElementsByTagName("script")[0];d.parentNode.insertBefore(b,d);a._i=[];a.init=function(b,c,f){function d(a,b){var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]);a[b]=function(){a.push([b].concat(Array.prototype.slice.call(arguments,0)))}}var g=a;"undefined"!==typeof f?g=
       a[f]=[]:f="mixpanel";g.people=g.people||[];h="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config people.set people.increment".split(" ");for(e=0;e<h.length;e++)d(g,h[e]);a._i.push([b,c,f])};a.__SV=1.1;window.mixpanel=a})(document,window.mixpanel||[]);
       mixpanel.init("90adfdd8359f5e3597eea0acb16e5557");
   body
-    header.visible#login
-      a(href="/auth") Login
-    header.invisible#user-info
+    header.container
+      div#user-info.invisible
         span#welcome Welcome  
-        span#username
+        span#username  
         a#logout(href="/logout") Logout
-    div.repo
+      div#login.visible
+        a(href="/auth") Login
+    div.container
       div.page.invisible#create-poll-page
         div.page-container
-          section#create-issue-form
+          section.page-content
             h1.title Title
             input#issue-title(placeholder="Name of issue...", required)
             select#user-repos-select(required)
-                option Choose repository
+              option Choose repository
             textarea#issue-description(rows="4", cols="50", placeholder="Add some description...")
             div.info-bar.invisible
               span Want to add somebody personally?
@@ -40,21 +40,23 @@ html(lang="en", data-username="#{user.username}", data-access-token="#{user.acce
               div#issue-labels-container
         button#create-issue-button Create poll
       div.page.invisible#poll-page
-        h1#poll-title
-        div#poll-description
-        div#no-results.invisible Nobody voted yet. Be the first!
-        div#results
-          div#yes Yes:
-          div#no No:
-        div#issue-comments
-        div#vote-btns
-          button#yes-btn +1
-          button#no-btn -1
-        svg#pie-chart
-    footer This is footer
-      a(href="https://mixpanel.com/f/partner")
-        img(src="https://mixpanel.com/site_media/images/partner/badge_light.png", alt="Mobile Analytics")
-  //- script(src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js")
+        div.page-container
+          section.page-content
+            h1#poll-title.title
+            div#poll-description
+            div#no-results.invisible Nobody voted yet. Be the first!
+            div#results
+              div#yes Yes:
+              div#no No:
+            div#issue-comments
+            div#vote-btns
+              button#yes-btn +1
+              button#no-btn -1
+            svg#pie-chart
+    footer#app-footer
+      div.container
+        a(href="https://mixpanel.com/f/partner")
+          img(src="https://mixpanel.com/site_media/images/partner/badge_light.png", alt="Mobile Analytics")
   script(src="/underscore.js")
   script(src="/underscore.string.min.js")
   script(src="/page.js")
@@ -63,5 +65,3 @@ html(lang="en", data-username="#{user.username}", data-access-token="#{user.acce
   script(src="/nv.d3.js")
   script(src="/chart.js")
   script(src="/app.js")
-
-  script#user-social-activity-tpl(type="text/template")
