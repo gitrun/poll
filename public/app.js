@@ -4,31 +4,22 @@ $(function(){
   function checkIfUserLoggedIn() {
     var userInfo = getLocalStorageData("lsUserInfo"); //----- lsUserInfo - localStorage user (name of string in LS)
     if (userInfo == undefined) {
-      if ($("html").attr("data-username") == "guest") {
+      if (gp.user.username == "guest") {
         return "guest";
       }
       else {
-        var user = $("html").attr("data-username");
-        window.accessToken = $("html").attr("data-access-token");
-
-        var userInfo = {"username": user, "accessToken": accessToken};
-        localStorage.setItem("lsUserInfo", JSON.stringify(userInfo));
+        localStorage.setItem("lsUserInfo", JSON.stringify(gp.user));
 
         mixpanel.track("User Logged-In");
-
-        return user;
       }
     } else {
-      var user = userInfo.username;     
-      window.accessToken = userInfo.accessToken;
-
-      return user;
+      gp.user = userInfo;
     }
   }
 
 	var userReposContainer = $('#user-repos-select');
 	function showUserRepos() {
-		$.getJSON("https://api.github.com/user/repos?access_token=" + accessToken, function(userRepos){
+		$.getJSON("https://api.github.com/user/repos?access_token=" + gp.user.accessToken, function(userRepos){
 			var html = "";
 
 			var m = 0;
@@ -38,7 +29,7 @@ $(function(){
       userReposContainer.append(html);
     });
 
-    $.getJSON("https://api.github.com/user/orgs?access_token=" + accessToken, function(userOrgs){
+    $.getJSON("https://api.github.com/user/orgs?access_token=" + gp.user.accessToken, function(userOrgs){
     	var userOrgsArray = [];
 
     	var i = 0;
@@ -48,7 +39,7 @@ $(function(){
     	
     	var k = 0;
       for (; k < userOrgsArray.length; k++) {
-      	$.getJSON("https://api.github.com/orgs/" + userOrgsArray[k] + "/repos?access_token=" + accessToken, function(orgRepos){
+      	$.getJSON("https://api.github.com/orgs/" + userOrgsArray[k] + "/repos?access_token=" + gp.user.accessToken, function(orgRepos){
       		var html ="";
 
       		var l = 0;
@@ -70,12 +61,19 @@ $(function(){
 
     var issueData = {"title": issueTitle};
 
-    $.post('https://api.github.com/repos/' + issueRepoFullname + '/issues?access_token=' + accessToken, JSON.stringify(issueData), function(data) {
+    $.post('https://api.github.com/repos/' + issueRepoFullname + '/issues?access_token=' + gp.user.accessToken, JSON.stringify(issueData), function(data) {
       console.log(data);
     });
 
     mixpanel.track("Poll Created");
   });
+
+  function logOutUser() {
+    localStorage.clear();
+    page('/logout');
+  }
+
+  $("#logout").on("click", logOutUser);
 
   // POLL PAGE
 
@@ -131,10 +129,10 @@ $(function(){
 
       $('#vote-btns').on('click', 'button', function() {
         if ($(this).attr('id') == 'yes-btn') {
-          $.post('https://api.github.com/repos/' + repoFullName + '/issues/' + number + '/comments?access_token=' + accessToken, JSON.stringify(yesCommentBody));
+          $.post('https://api.github.com/repos/' + repoFullName + '/issues/' + number + '/comments?access_token=' + gp.user.accessToken, JSON.stringify(yesCommentBody));
           mixpanel.track("Voted +1");
         } else if ($(this).attr('id') == 'no-btn') {
-          $.post('https://api.github.com/repos/' + repoFullName + '/issues/' + number + '/comments?access_token=' + accessToken, JSON.stringify(noCommentBody));
+          $.post('https://api.github.com/repos/' + repoFullName + '/issues/' + number + '/comments?access_token=' + gp.user.accessToken, JSON.stringify(noCommentBody));
           mixpanel.track("Voted -1");
         }
       });
@@ -169,8 +167,8 @@ $(function(){
     var repoFullName = ctx.params.user + "/" + ctx.params.repoName;
     var number = ctx.params.number;
 
-    var userStatus = checkIfUserLoggedIn();
-    if (userStatus == 'guest') {
+    checkIfUserLoggedIn();
+    if (checkIfUserLoggedIn() == 'guest') {
       $("#login").removeClass("invisible").addClass("visible");
 
       var urlIssue = "https://api.github.com/repos/" + repoFullName + "/issues/" + number;
@@ -180,10 +178,11 @@ $(function(){
     } else {
       $("#login").removeClass("visible").addClass("invisible");
       $("#user-info").removeClass("invisible").addClass("visible");
-      $("#username").html(userStatus);
+      $("#user-info img").attr("src", gp.user.avatar);
+      $("#username").attr("href", gp.user.profileUrl).text(gp.user.username);
 
-      var urlIssue = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "?access_token=" + accessToken;
-      var urlComments = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "/comments?access_token=" + accessToken;
+      var urlIssue = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "?access_token=" + gp.user.accessToken;
+      var urlComments = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "/comments?access_token=" + gp.user.accessToken;
 
       $("#vote-btns").removeClass("invisible").addClass("visible");
     }
@@ -195,13 +194,14 @@ $(function(){
   });
 
   page('', function(){
-    var userStatus = checkIfUserLoggedIn();
-    if (userStatus == 'guest') {
+    checkIfUserLoggedIn();
+    if (checkIfUserLoggedIn() == 'guest') {
       $("#login").removeClass("invisible").addClass("visible");
     } else {
       $("#login").removeClass("visible").addClass("invisible");
       $("#user-info").removeClass("invisible").addClass("visible");
-      $("#username").html(userStatus);
+      $("#user-info img").attr("src", gp.user.avatar);
+      $("#username").attr("href", gp.user.profileUrl).text(gp.user.username);
 
       showPage("create-poll-page", showUserRepos);
       mixpanel.track("Create Poll Page Loaded");

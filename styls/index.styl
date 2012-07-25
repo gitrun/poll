@@ -16,6 +16,7 @@ body
 header.container
   margin-top: 10px;
   margin-bottom: 20px;
+  min-height: 20px;
   & a
   & a:visited
     white-space: nowrap;
@@ -40,6 +41,8 @@ header.container
   line-height: 22px;
   font-weight: bold;
   text-shadow: 0 1px 0 white;
+  &:hover
+    text-decoration: underline;
 .page
   position: relative;
   width: 740px;
@@ -140,6 +143,11 @@ button#create-issue-button
   font-size: 16px;
   width: 100%;
   position: relative;
+  & img
+    width: 22px;
+    vertical-align: -6px;
+    margin: 0 3px 0 10px;
+    border-radius: 11px;
 #login, #logout
   color: #333;
   position: absolute;
