@@ -90,7 +90,12 @@ $(function(){
         html += "<p>" + issueDescriptionStringsArray[i] + "</p>"
       }
       pollDescriptionContainer.html(html);
+    }).error(function() {
+      $("#results").removeClass("visible").addClass("invisible");
+      $("#vote-btns").removeClass("visible").addClass("invisible");
+      $("p.error").removeClass("invisible").addClass("visible");
     });
+
     $.getJSON(urlComments, function(issueCommentsData){
       var issueCommentsContainer = $('#issue-comments');
 
@@ -135,6 +140,10 @@ $(function(){
         }
       });
 
+    }).error(function() {
+      $("#results").removeClass("visible").addClass("invisible");
+      $("#vote-btns").removeClass("visible").addClass("invisible");
+      $("p.error").removeClass("invisible").addClass("visible");
     });
   }
 
