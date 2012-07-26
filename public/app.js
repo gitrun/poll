@@ -92,8 +92,6 @@ $(function(){
       pollDescriptionContainer.html(html);
     });
     $.getJSON(urlComments, function(issueCommentsData){
-      var yesContainer = $('#yes');
-      var noContainer = $('#no');
       var issueCommentsContainer = $('#issue-comments');
 
       var yesArray = [];
@@ -113,15 +111,7 @@ $(function(){
         $("#results").removeClass("visible").addClass("invisible");
         $("#vote-btns").removeClass("invisible").addClass("visible");
       } else {
-        yesContainer.append(yesArray.length);
-        noContainer.append(noArray.length);
-
-        var data = [{ key : "Poll Results",
-                      values : [{"label": "yes", "value": yesArray.length}, 
-                                {"label": "no", "value": noArray.length}]
-                    }];
-
-        pie(data, "#pie-chart");
+        updatePollResultsView(yesArray, noArray);
       }
 
       var yesCommentBody = {"body": "+1"};
@@ -130,9 +120,17 @@ $(function(){
       $('#vote-btns').on('click', 'button', function() {
         if ($(this).attr('id') == 'yes-btn') {
           $.post('https://api.github.com/repos/' + repoFullName + '/issues/' + number + '/comments?access_token=' + gp.user.accessToken, JSON.stringify(yesCommentBody));
+          
+          yesArray.push('+1');
+          updatePollResultsView(yesArray, noArray);
+
           mixpanel.track("Voted +1");
         } else if ($(this).attr('id') == 'no-btn') {
           $.post('https://api.github.com/repos/' + repoFullName + '/issues/' + number + '/comments?access_token=' + gp.user.accessToken, JSON.stringify(noCommentBody));
+          
+          noArray.push('-1');
+          updatePollResultsView(yesArray, noArray);
+
           mixpanel.track("Voted -1");
         }
       });
@@ -161,13 +159,27 @@ $(function(){
     }
   }
 
+  function updatePollResultsView(yesArray, noArray) {
+    var yesContainer = $('#yes span');
+    var noContainer = $('#no span');
+
+    yesContainer.text(yesArray.length);
+    noContainer.text(noArray.length);
+
+    var data = [{ key : "Poll Results",
+                  values : [{"label": "yes", "value": yesArray.length}, 
+                            {"label": "no", "value": noArray.length}]
+                }];
+
+    pie(data, "#pie-chart");
+  }
+
   // ROUTER
 
   page('/:user/:repoName/:number', function(ctx){
     var repoFullName = ctx.params.user + "/" + ctx.params.repoName;
     var number = ctx.params.number;
 
-    checkIfUserLoggedIn();
     if (checkIfUserLoggedIn() == 'guest') {
       $("#login").removeClass("invisible").addClass("visible");
 
@@ -194,7 +206,6 @@ $(function(){
   });
 
   page('', function(){
-    checkIfUserLoggedIn();
     if (checkIfUserLoggedIn() == 'guest') {
       $("#login").removeClass("invisible").addClass("visible");
     } else {
