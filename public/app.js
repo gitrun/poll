@@ -19,7 +19,8 @@ $(function(){
 
 	var userReposContainer = $('#user-repos-select');
 	function showUserRepos() {
-		$.getJSON("https://api.github.com/user/repos?access_token=" + gp.user.accessToken, function(userRepos){
+    var urlUserRepos = defineUrl("/user/repos", gp.user.accessToken);
+		$.getJSON(urlUserRepos, function(userRepos){
 			var html = "";
 
 			var m = 0;
@@ -29,7 +30,8 @@ $(function(){
       userReposContainer.append(html);
     });
 
-    $.getJSON("https://api.github.com/user/orgs?access_token=" + gp.user.accessToken, function(userOrgs){
+    var urlUserOrgs = defineUrl("/user/orgs", gp.user.accessToken);
+    $.getJSON(urlUserOrgs, function(userOrgs){
     	var userOrgsArray = [];
 
     	var i = 0;
@@ -37,9 +39,10 @@ $(function(){
       	userOrgsArray.push(userOrgs[i].login);
       }
     	
-    	var k = 0;
+      var k = 0;
       for (; k < userOrgsArray.length; k++) {
-      	$.getJSON("https://api.github.com/orgs/" + userOrgsArray[k] + "/repos?access_token=" + gp.user.accessToken, function(orgRepos){
+        var urlUserOrgsRepos = defineUrl("/orgs/" + userOrgsArray[k] + "/repos", gp.user.accessToken);
+      	$.getJSON(urlUserOrgsRepos, function(orgRepos){
       		var html ="";
 
       		var l = 0;
@@ -61,7 +64,9 @@ $(function(){
 
     var issueData = {"title": issueTitle};
 
-    $.post('https://api.github.com/repos/' + issueRepoFullname + '/issues?access_token=' + gp.user.accessToken, JSON.stringify(issueData), function(data) {
+    var url = defineUrl('/repos/' + issueRepoFullname + '/issues', gp.user.accessToken);
+
+    $.post(url, JSON.stringify(issueData), function(data) {
       console.log(data);
     });
 
@@ -77,7 +82,7 @@ $(function(){
 
   // POLL PAGE
 
-  function buildPollPage(repoFullName, number, urlIssue, urlComments){
+  function buildPollPage(urlIssue, urlComments){
     $.getJSON(urlIssue, function(issueData){
       var pollTitleContainer = $('#poll-title');
       var pollDescriptionContainer = $("#poll-description");
@@ -124,14 +129,14 @@ $(function(){
 
       $('#vote-btns').on('click', 'button', function() {
         if ($(this).attr('id') == 'yes-btn') {
-          $.post('https://api.github.com/repos/' + repoFullName + '/issues/' + number + '/comments?access_token=' + gp.user.accessToken, JSON.stringify(yesCommentBody));
+          $.post(urlComments, JSON.stringify(yesCommentBody));
           
           yesArray.push('+1');
           updatePollResultsView(yesArray, noArray);
 
           mixpanel.track("Voted +1");
         } else if ($(this).attr('id') == 'no-btn') {
-          $.post('https://api.github.com/repos/' + repoFullName + '/issues/' + number + '/comments?access_token=' + gp.user.accessToken, JSON.stringify(noCommentBody));
+          $.post(urlComments, JSON.stringify(noCommentBody));
           
           noArray.push('-1');
           updatePollResultsView(yesArray, noArray);
@@ -183,17 +188,22 @@ $(function(){
     pie(data, "#pie-chart");
   }
 
+  function defineUrl(relativePath, accessToken) {
+    var path = "https://api.github.com" + relativePath;
+    if (accessToken) {
+      path += "?access_token=" + gp.user.accessToken;
+    }
+    return path;
+  }
+
   // ROUTER
 
-  page('/:user/:repoName/:number', function(ctx){
-    var repoFullName = ctx.params.user + "/" + ctx.params.repoName;
-    var number = ctx.params.number;
-
+  page('/:user/:repoName/issues/:number', function(ctx){
     if (checkIfUserLoggedIn() == 'guest') {
       $("#login").removeClass("invisible").addClass("visible");
 
-      var urlIssue = "https://api.github.com/repos/" + repoFullName + "/issues/" + number;
-      var urlComments = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "/comments";
+      var urlIssue = defineUrl("/repos/" + ctx.params.user + "/" + ctx.params.repoName + "/issues/" + ctx.params.number);
+      var urlComments = defineUrl("/repos/" + ctx.params.user + "/" + ctx.params.repoName + "/issues/" + ctx.params.number + "/comments");
 
       $("#vote-btns").removeClass("visible").addClass("invisible");
     } else {
@@ -202,15 +212,16 @@ $(function(){
       $("#user-info img").attr("src", gp.user.avatar);
       $("#username").attr("href", gp.user.profileUrl).text(gp.user.username);
 
-      var urlIssue = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "?access_token=" + gp.user.accessToken;
-      var urlComments = "https://api.github.com/repos/" + repoFullName + "/issues/" + number + "/comments?access_token=" + gp.user.accessToken;
+      var urlIssue = defineUrl("/repos/" + ctx.params.user + "/" + ctx.params.repoName + "/issues/" + ctx.params.number, gp.user.accessToken);
+      var urlComments = defineUrl("/repos/" + ctx.params.user + "/" + ctx.params.repoName + "/issues/" + ctx.params.number + "/comments", gp.user.accessToken);
 
       $("#vote-btns").removeClass("invisible").addClass("visible");
     }
 
     showPage("poll-page", function(){
-      buildPollPage(repoFullName, number, urlIssue, urlComments);
+      buildPollPage(urlIssue, urlComments);
     });
+
     mixpanel.track("Poll Page Loaded");
   });
 

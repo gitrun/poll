@@ -78,7 +78,7 @@ app.get "/", (req, res) ->
   console.log "user", user  
   res.render "index", {user: user}
 
-app.get "/:username/:repoName/:number", (req, res) ->
+app.get "/:username/:repoName/issues/:number", (req, res) ->
   
   user = req.user
   if not user
