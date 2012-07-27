@@ -54,6 +54,7 @@ app.configure ->
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.set('view options', {layout: false});
+  app.use(express.favicon(__dirname + "/public/favicon.ico"));
   app.use(express.logger());
   app.use(express.cookieParser());
   app.use(express.bodyParser());

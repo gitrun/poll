@@ -41,7 +41,7 @@ html(lang="en")
       img(src="").invisible
       a#username.invisible(href="", target="_blank", title="Opens in new window")
       button#logout.invisible Logout
-      a#login.visible(href="/auth") Login
+      a#login.invisible(href="/auth") Login
     div.container
       div.page.invisible#app-intro-page
         div.page-container
@@ -76,7 +76,8 @@ html(lang="en")
         div.page-container
           section.page-content
             p.error.invisible Sorry, there is no issue on given URL, please check, if URL is correct.
-            h1#poll-title.title
+            a(href="", target="_blank")
+              h1#poll-title.title
             div#poll-description
             div#no-results.invisible Nobody voted yet. Be the first!
             div#results

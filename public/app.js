@@ -125,9 +125,11 @@ $(function(){
       $("#poll-page").spin(false);
 
       var pollTitleContainer = $('#poll-title');
+      var issueLinkContainer = pollTitleContainer.parent();
       var pollDescriptionContainer = $("#poll-description");
 
       pollTitleContainer.html(issueData.title);
+      issueLinkContainer.attr("href", issueData.html_url);
       if (issueData.body) {
         var issueDescriptionStringsArray = issueData.body.split("\n");
         var html = "";
@@ -152,9 +154,9 @@ $(function(){
       var i = 0;
       for (; i < issueCommentsData.length; i++) {
         if (_.str.include(issueCommentsData[i].body, "+1")) {
-          yesArray.push('+1');
+          yesArray.push(issueCommentsData[i].user.login);
         } else if (_.str.include(issueCommentsData[i].body, "-1")) {
-          noArray.push('-1');
+          noArray.push(issueCommentsData[i].user.login);
         }
       }
 
@@ -173,14 +175,14 @@ $(function(){
         if ($(this).attr('id') == 'yes-btn') {
           $.post(urlComments, JSON.stringify(yesCommentBody));
           
-          yesArray.push('+1');
+          yesArray.push(gp.user.username);
           updatePollResultsView(yesArray, noArray);
 
           mixpanel.track("Voted +1");
         } else if ($(this).attr('id') == 'no-btn') {
           $.post(urlComments, JSON.stringify(noCommentBody));
           
-          noArray.push('-1');
+          noArray.push(gp.user.username);
           updatePollResultsView(yesArray, noArray);
 
           mixpanel.track("Voted -1");
@@ -218,6 +220,9 @@ $(function(){
   function updatePollResultsView(yesArray, noArray) {
     var yesContainer = $('#yes span');
     var noContainer = $('#no span');
+
+    yesArray = _.uniq(yesArray);
+    noArray = _.uniq(noArray);
 
     yesContainer.text(yesArray.length);
     noContainer.text(noArray.length);
