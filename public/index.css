@@ -171,6 +171,9 @@ header.container a:hover {
   font-weight: bold;
   color: #333;
 }
+#app-intro-page .title {
+  margin: 10px 0 15px;
+}
 #issue-title {
   width: 49%;
   font-size: 16px;
