@@ -109,7 +109,7 @@ body {
 header.container {
   margin-top: 10px;
   margin-bottom: 20px;
-  min-height: 20px;
+  height: 30px;
 }
 header.container a,
 header.container a:visited {
@@ -162,6 +162,7 @@ header.container a:hover {
   -webkit-border-radius: 2px;
   border-radius: 2px;
   position: relative;
+  min-height: 160px;
 }
 .title {
   font: 13px Helvetica, arial, freesans, clean, sans-serif;
@@ -248,6 +249,7 @@ textarea {
 button#create-issue-button {
   position: absolute;
   right: 5px;
+  margin-top: 15px;
 }
 #user-repos-select {
   width: 49%;
@@ -267,13 +269,13 @@ button#create-issue-button {
   font-size: 12px;
   font-weight: normal;
 }
-#user-info {
+header {
   color: #666;
   font-size: 16px;
   width: 100%;
   position: relative;
 }
-#user-info img {
+header img {
   width: 22px;
   vertical-align: -6px;
   margin: 0 3px 0 10px;
@@ -303,7 +305,7 @@ button#create-issue-button {
 }
 #logout {
   right: 5px;
-  bottom: -4px;
+  bottom: -9px;
 }
 #login:hover,
 #logout:hover {
@@ -319,6 +321,10 @@ button#create-issue-button {
   background: -o-linear-gradient(top, #716896 0%, #1d0d5a 100%);
   background: -ms-linear-gradient(top, #716896 0%, #1d0d5a 100%);
   background: linear-gradient(top, #716896 0%, #1d0d5a 100%);
+}
+#no-results {
+  margin-bottom: 10px;
+  margin-top: 20px;
 }
 #chart-panel {
   margin: -35px auto 0;
@@ -336,12 +342,6 @@ button#create-issue-button {
 #no span {
   margin-left: 4px;
 }
-.visible {
-  display: block;
-}
-.invisible {
-  display: none;
-}
 .not-valid {
   border: 1px solid #f00 !important;
 }
@@ -350,4 +350,38 @@ g.slice:nth-child(1) {
 }
 g.slice:nth-child(2) {
   fill: #232063;
+}
+footer a {
+  color: #4a3e7b;
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+header svg {
+  width: auto;
+  display: inline-block;
+}
+header svg path {
+  fill: #4a3e7b;
+}
+#home {
+  margin-right: 15px;
+  display: inline-block;
+  bottom: -8px;
+  width: 30px;
+  height: 30px;
+  position: relative;
+}
+#home:hover path {
+  fill: #ff8a66;
+}
+.visible {
+  display: block;
+}
+.inline-visible {
+  display: inline-block;
+}
+.invisible {
+  display: none;
 }

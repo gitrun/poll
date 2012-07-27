@@ -33,11 +33,14 @@ html(lang="en")
       };  
   body
     header.container
-      div#user-info.invisible
-        span#welcome Welcome
-        img(src="")
-        a#username(href="", target="_blank", title="Opens in new window")
-        button#logout Logout
+      a(href="/")#home.visible
+        svg(version="1.1", id="Layer_1", xmlns="http://www.w3.org/2000/svg", x="0px", y="0px", width="30px", height="30px", viewBox="0 0 100 100", enable-background="new 0 0 100 100")
+          path(d="M92,46C92,20.595,71.405,0,46,0S0,20.595,0,46s20.595,46,46,46V46H92z")
+          path(d="M54,100c25.405,0,46-20.595,46-46H54V100z")
+      span#welcome.invisible Welcome
+      img(src="").invisible
+      a#username.invisible(href="", target="_blank", title="Opens in new window")
+      button#logout.invisible Logout
       a#login.visible(href="/auth") Login
     div.container
       div.page.invisible#create-poll-page
@@ -75,11 +78,12 @@ html(lang="en")
             div#vote-btns
               button#yes-btn.btn +1
               button#no-btn.btn -1
-            div#chart-panel  
+            div#chart-panel.invisible
               svg#pie-chart
     footer#app-footer
       div.container
-        p GitPoll.com is not affiliated with GitHub
+        p GitPoll.com is not affiliated with <a href="http://github.com/">GitHub</a>.
+        p Home icon and favicon symbol by <a href="http://thenounproject.com/">The Noun Project</a> team.
         a(href="https://mixpanel.com/f/partner")
           img(src="https://mixpanel.com/site_media/images/partner/badge_light.png", alt="Mobile Analytics")
   a(href="https://github.com/marynaaleksandrova/githubpoll")
@@ -88,6 +92,8 @@ html(lang="en")
   script(src="/underscore.string.min.js")
   script(src="/page.js")
   script(src="/jquery-1.7.2.min.js")
+  script(src="/spin.min.js")
+  script(src="/jquery.spin.min.js")
   script(src="/d3.v2.js")
   script(src="/nv.d3.js")
   script(src="/chart.js")

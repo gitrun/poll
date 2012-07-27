@@ -74,7 +74,11 @@ $(function(){
 
   $("#create-issue-button").on("click", function(e) {
     e.preventDefault();
+
     if (checkValidity() == true) {
+      $("#create-poll-page .page-container").removeClass("visible").addClass("invisible");
+      $("#create-poll-page").spin();
+
       var issueTitle = $("#issue-title").val();
       var issueDescription = $("#issue-description").val();
       var issueRepoFullname = $("#user-repos-select").val();
@@ -86,6 +90,9 @@ $(function(){
       var url = defineUrl('/repos/' + issueRepoFullname + '/issues', gp.user.accessToken);
 
       $.post(url, JSON.stringify(issueData), function(data) {
+        $("#create-poll-page .page-container").removeClass("invisible").addClass("visible");
+        $("#create-poll-page").spin(false);
+
         var url = data.html_url.split("/")
 
         page("/" + url[3] + "/" + url[4] + "/" + url[5] + "/" + url[6]);
@@ -102,10 +109,21 @@ $(function(){
 
   $("#logout").on("click", logOutUser);
 
+  $("#home").on("click", function(e){
+    e.preventDefault()
+    page("/");
+  }); 
   // POLL PAGE
 
   function buildPollPage(urlIssue, urlComments){
+    $("#poll-page .page-container").removeClass("visible").addClass("invisible");
+    $("#poll-page").spin();
+
+
     $.getJSON(urlIssue, function(issueData){
+      $("#poll-page .page-container").removeClass("invisible").addClass("visible");
+      $("#poll-page").spin(false);
+
       var pollTitleContainer = $('#poll-title');
       var pollDescriptionContainer = $("#poll-description");
 
@@ -233,8 +251,8 @@ $(function(){
       $("#vote-btns").removeClass("visible").addClass("invisible");
     } else {
       $("#login").removeClass("visible").addClass("invisible");
-      $("#user-info").removeClass("invisible").addClass("visible");
-      $("#user-info img").attr("src", gp.user.avatar);
+      $("#welcome, header img, #username, #logout").removeClass("invisible").addClass("inline-visible");
+      $("header img").attr("src", gp.user.avatar);
       $("#username").attr("href", gp.user.profileUrl).text(gp.user.username);
 
       var urlIssue = defineUrl("/repos/" + ctx.params.user + "/" + ctx.params.repoName + "/issues/" + ctx.params.number, gp.user.accessToken);
@@ -255,8 +273,8 @@ $(function(){
       $("#login").removeClass("invisible").addClass("visible");
     } else {
       $("#login").removeClass("visible").addClass("invisible");
-      $("#user-info").removeClass("invisible").addClass("visible");
-      $("#user-info img").attr("src", gp.user.avatar);
+      $("#welcome, header img, #username, #logout").removeClass("invisible").addClass("inline-visible");
+      $("header img").attr("src", gp.user.avatar);
       $("#username").attr("href", gp.user.profileUrl).text(gp.user.username);
 
       showPage("create-poll-page", showUserRepos);
