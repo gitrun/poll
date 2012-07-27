@@ -243,7 +243,7 @@ $(function(){
 
   page('/:user/:repoName/issues/:number', function(ctx){
     if (checkIfUserLoggedIn() == 'guest') {
-      $("#login").removeClass("invisible").addClass("visible");
+      $("#login").removeClass("invisible").addClass("inline-visible");
 
       var urlIssue = defineUrl("/repos/" + ctx.params.user + "/" + ctx.params.repoName + "/issues/" + ctx.params.number);
       var urlComments = defineUrl("/repos/" + ctx.params.user + "/" + ctx.params.repoName + "/issues/" + ctx.params.number + "/comments");
@@ -270,7 +270,8 @@ $(function(){
 
   page('', function(){
     if (checkIfUserLoggedIn() == 'guest') {
-      $("#login").removeClass("invisible").addClass("visible");
+      $("#login").removeClass("invisible").addClass("inline-visible");
+      showPage("app-intro-page");
     } else {
       $("#login").removeClass("visible").addClass("invisible");
       $("#welcome, header img, #username, #logout").removeClass("invisible").addClass("inline-visible");

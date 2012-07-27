@@ -43,10 +43,20 @@ html(lang="en")
       button#logout.invisible Logout
       a#login.visible(href="/auth") Login
     div.container
+      div.page.invisible#app-intro-page
+        div.page-container
+          section.page-content
+            h2 Usage
+            ol
+              li Create new issue on GitHub or GitPoll.
+              li Share link to issue with repository collaborators.
+              li Vote on issue and see results like <a href="http://gitpoll.com/emberjs/ember.js/issues/1205">here</a>. 
+            h2 Feedback
+            p If you run into some problem with app or need extra feature please create new issue on <a href="https://github.com/marynaaleksandrova/githubpoll/issues">GitHub</a> and we will vote on it.
       div.page.invisible#create-poll-page
-        form(onsubmit="return false;")
-          div.page-container
-            section.page-content
+        div.page-container
+          section.page-content
+            form(onsubmit="return false;")
               h1.title Title
               input#issue-title(placeholder="Name of issue...", required)
               select#user-repos-select(required)
@@ -61,7 +71,7 @@ html(lang="en")
                 input#issue-label
                 button#add-issue-label-button Add
                 div#issue-labels-container
-            button#create-issue-button.btn Create poll
+          button#create-issue-button.btn Create poll
       div.page.invisible#poll-page
         div.page-container
           section.page-content

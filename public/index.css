@@ -285,7 +285,6 @@ header img {
 #login,
 #logout {
   color: #333;
-  position: absolute;
   padding: 0 10px 0 10px;
   font-weight: bold;
   line-height: 24px;
@@ -304,6 +303,7 @@ header img {
   cursor: pointer;
 }
 #logout {
+  position: absolute;
   right: 5px;
   bottom: -9px;
 }
