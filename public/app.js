@@ -55,22 +55,44 @@ $(function(){
     });
 	}
 
-  $("#create-issue-button").on("click", function() {
-    var issueTitle = $("#issue-title").val();
-    var issueDescription = $("#issue-description").val();
-    var issueRepoFullname = $("#user-repos-select").val();
-    var issueMandatoryVoter = $("#mandatory-voter").val();
-    var issueLabel = $("issue-label").val();
+  function checkValidity() {
+    var isValid = true;
+    if ($("#issue-title").get(0).checkValidity() == false) {
+      $("#issue-title").addClass("not-valid");
+      isValid = false;
+    } else {
+      $("#issue-title").removeClass("not-valid");
+    }
+    if ($("#user-repos-select").val() == "Choose repository") {
+      $("#user-repos-select").addClass("not-valid");
+      isValid = false;
+    } else {
+      $("#user-repos-select").removeClass("not-valid");
+    }
+    return isValid;
+  }
 
-    var issueData = {"title": issueTitle};
+  $("#create-issue-button").on("click", function(e) {
+    e.preventDefault();
+    if (checkValidity() == true) {
+      var issueTitle = $("#issue-title").val();
+      var issueDescription = $("#issue-description").val();
+      var issueRepoFullname = $("#user-repos-select").val();
+      var issueMandatoryVoter = $("#mandatory-voter").val();
+      var issueLabel = $("issue-label").val();
 
-    var url = defineUrl('/repos/' + issueRepoFullname + '/issues', gp.user.accessToken);
+      var issueData = {"title": issueTitle, "body": issueDescription};
 
-    $.post(url, JSON.stringify(issueData), function(data) {
-      console.log(data);
-    });
+      var url = defineUrl('/repos/' + issueRepoFullname + '/issues', gp.user.accessToken);
 
-    mixpanel.track("Poll Created");
+      $.post(url, JSON.stringify(issueData), function(data) {
+        var url = data.html_url.split("/")
+
+        page("/" + url[3] + "/" + url[4] + "/" + url[5] + "/" + url[6]);
+      });
+
+      mixpanel.track("Poll Created");
+    }
   });
 
   function logOutUser() {
@@ -88,13 +110,15 @@ $(function(){
       var pollDescriptionContainer = $("#poll-description");
 
       pollTitleContainer.html(issueData.title);
-      var issueDescriptionStringsArray = issueData.body.split("\n");
-      var html = "";
-      var i = 0;
-      for (; i < issueDescriptionStringsArray.length; i++) {
-        html += "<p>" + issueDescriptionStringsArray[i] + "</p>"
+      if (issueData.body) {
+        var issueDescriptionStringsArray = issueData.body.split("\n");
+        var html = "";
+        var i = 0;
+        for (; i < issueDescriptionStringsArray.length; i++) {
+          html += "<p>" + issueDescriptionStringsArray[i] + "</p>"
+        }
+        pollDescriptionContainer.html(html);
       }
-      pollDescriptionContainer.html(html);
     }).error(function() {
       $("#results").removeClass("visible").addClass("invisible");
       $("#vote-btns").removeClass("visible").addClass("invisible");
@@ -118,7 +142,7 @@ $(function(){
 
       if ((yesArray.length == 0) && (noArray.length == 0)) {
         $("#no-results").removeClass("invisible").addClass("visible");
-        $("#results").removeClass("visible").addClass("invisible");
+        $("#results, #chart-panel").removeClass("visible").addClass("invisible");
         $("#vote-btns").removeClass("invisible").addClass("visible");
       } else {
         updatePollResultsView(yesArray, noArray);
@@ -186,6 +210,7 @@ $(function(){
                 }];
 
     pie(data, "#pie-chart");
+    $("#results, #chart-panel").removeClass("invisible").addClass("visible");
   }
 
   function defineUrl(relativePath, accessToken) {

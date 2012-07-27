@@ -342,6 +342,9 @@ button#create-issue-button {
 .invisible {
   display: none;
 }
+.not-valid {
+  border: 1px solid #f00 !important;
+}
 g.slice:nth-child(1) {
   fill: #ed4706;
 }

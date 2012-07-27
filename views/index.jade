@@ -41,23 +41,24 @@ html(lang="en")
       a#login.visible(href="/auth") Login
     div.container
       div.page.invisible#create-poll-page
-        div.page-container
-          section.page-content
-            h1.title Title
-            input#issue-title(placeholder="Name of issue...", required)
-            select#user-repos-select(required)
-              option Choose repository
-            textarea#issue-description(rows="4", cols="50", placeholder="Add some description...")
-            div.info-bar.invisible
-              span Want to add somebody personally?
-              input#mandatory-voter
-              button#add-mandatory-voter-button Add
-              div#mandatory-voter-container
-              span#issue-labels Labels:
-              input#issue-label
-              button#add-issue-label-button Add
-              div#issue-labels-container
-        button#create-issue-button.btn Create poll
+        form(onsubmit="return false;")
+          div.page-container
+            section.page-content
+              h1.title Title
+              input#issue-title(placeholder="Name of issue...", required)
+              select#user-repos-select(required)
+                option Choose repository
+              textarea#issue-description(rows="4", cols="50", placeholder="Add some description...")
+              div.info-bar.invisible
+                span Want to add somebody personally?
+                input#mandatory-voter
+                button#add-mandatory-voter-button Add
+                div#mandatory-voter-container
+                span#issue-labels Labels:
+                input#issue-label
+                button#add-issue-label-button Add
+                div#issue-labels-container
+            button#create-issue-button.btn Create poll
       div.page.invisible#poll-page
         div.page-container
           section.page-content
