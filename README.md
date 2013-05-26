@@ -1,4 +1,4 @@
-githubpoll
+gitpoll
 ==========
 
 Poll for Github issues.
