@@ -2,7 +2,7 @@ gitpoll
 ==========
 
 Poll for Github issues.
-[gitpoll.com] and [poll.gitrun.com].
+(gitpoll.com)[http://gitpoll.com] and (poll.gitrun.com)[http://poll.gitrun.com].
 
 LICENCE
 ==========
