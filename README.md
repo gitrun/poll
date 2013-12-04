@@ -2,14 +2,14 @@ gitpoll
 ==========
 
 Poll for Github issues.
-[gitpoll.com](http://gitpoll.com) and [poll.gitrun.com](http://poll.gitrun.com).
+[poll.gitrun.com](http://poll.gitrun.com).
 
 LICENCE
 ==========
 
 (The MIT License)
 
-Copyright (c) 2012-2013 #{hash:object}(team@hashobject.com)
+Copyright © 2012-2013 Hashobject Ltd(team@hashobject.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the 'Software'), to deal
