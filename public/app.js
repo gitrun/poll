@@ -15,6 +15,11 @@ $(function(){
     }
   }
 
+  function makeHtml(md){
+    var mdConverter = new Showdown.converter();
+    return mdConverter.makeHtml(md);
+  }
+
 	var userReposContainer = $('#user-repos-select');
 	function showUserRepos() {
     var urlUserRepos = defineUrl("/user/repos", gp.user.accessToken);
@@ -127,12 +132,7 @@ $(function(){
       pollTitleContainer.html(issueData.title);
       issueLinkContainer.attr("href", issueData.html_url);
       if (issueData.body) {
-        var issueDescriptionStringsArray = issueData.body.split("\n");
-        var html = "";
-        var i = 0;
-        for (; i < issueDescriptionStringsArray.length; i++) {
-          html += "<p>" + issueDescriptionStringsArray[i] + "</p>"
-        }
+        var html = makeHtml(issueData.body);
         pollDescriptionContainer.html(html);
       }
     }).error(function() {
