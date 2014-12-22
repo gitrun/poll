@@ -72,15 +72,15 @@ app.get '/auth',
   (req, res) ->
 
 app.get "/", (req, res) ->
-  
+
   user = req.user
   if not user
     user = {username:'guest'}
-  console.log "user", user  
+  console.log "user", user
   res.render "index", {user: user}
 
 app.get "/:username/:repoName/issues/:number", (req, res) ->
-  
+
   user = req.user
   if not user
     user = {username:'guest'}
@@ -90,7 +90,7 @@ app.get "/logout", (req, res) ->
   req.logout()
   res.redirect "/"
 
-app.get '/auth/callback', 
+app.get '/auth/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   (req, res) ->
     res.redirect('/');
