@@ -327,7 +327,8 @@ header img {
 }
 #chart-panel {
   margin: -35px auto 0;
-  width: 400px;
+  height: 400px;
+  position: relative;
 }
 #poll-description {
   margin-top: 10px;

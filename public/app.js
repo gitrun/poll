@@ -225,7 +225,18 @@ $(function(){
                             {"label": "no", "value": noArray.length}]
                 }];
 
-    pie(data, "#pie-chart");
+    // pie(data, "#pie-chart");
+    c3.generate({
+      bindto: "#chart-panel",
+      data: {
+        // iris data from R
+        columns: [
+            ['yes', yesArray.length],
+            ['no', noArray.length],
+        ],
+        type : 'pie'
+      }
+    });
     $("#results, #chart-panel").removeClass("invisible").addClass("visible");
   }
 
