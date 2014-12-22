@@ -149,9 +149,10 @@ $(function(){
 
       var i = 0;
       for (; i < issueCommentsData.length; i++) {
-        if (_.str.include(issueCommentsData[i].body, "+1")) {
+        var commentText = issueCommentsData[i].body;
+        if (commentText.indexOf("+1") > -1) {
           yesArray.push(issueCommentsData[i].user.login);
-        } else if (_.str.include(issueCommentsData[i].body, "-1")) {
+        } else if (commentText.indexOf("-1") > -1) {
           noArray.push(issueCommentsData[i].user.login);
         }
       }
