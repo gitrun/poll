@@ -38,7 +38,7 @@ $(function(){
       for (; i < userOrgs.length; i++) {
       	userOrgsArray.push(userOrgs[i].login);
       }
-    	
+
       var k = 0;
       for (; k < userOrgsArray.length; k++) {
         var urlUserOrgsRepos = defineUrl("/orgs/" + userOrgsArray[k] + "/repos", gp.user.accessToken);
@@ -112,7 +112,7 @@ $(function(){
   $("#home").on("click", function(e){
     e.preventDefault()
     page("/");
-  }); 
+  });
   // POLL PAGE
 
   function buildPollPage(urlIssue, urlComments){
@@ -174,14 +174,14 @@ $(function(){
       $('#vote-btns').on('click', 'button', function() {
         if ($(this).attr('id') == 'yes-btn') {
           $.post(urlComments, JSON.stringify(yesCommentBody));
-          
+
           yesArray.push(gp.user.username);
           updatePollResultsView(yesArray, noArray);
 
           mixpanel.track("Voted +1");
         } else if ($(this).attr('id') == 'no-btn') {
           $.post(urlComments, JSON.stringify(noCommentBody));
-          
+
           noArray.push(gp.user.username);
           updatePollResultsView(yesArray, noArray);
 
@@ -228,7 +228,7 @@ $(function(){
     noContainer.text(noArray.length);
 
     var data = [{ key : "Poll Results",
-                  values : [{"label": "yes", "value": yesArray.length}, 
+                  values : [{"label": "yes", "value": yesArray.length},
                             {"label": "no", "value": noArray.length}]
                 }];
 
@@ -289,5 +289,5 @@ $(function(){
   });
 
   page.start({ click: false });
-  
+
 });

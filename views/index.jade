@@ -4,8 +4,8 @@ html(lang="en")
     meta(charset="utf-8")
     title GitPoll - vote on GitHub issue
     meta(name="description", content="Application for voting on GitHub issues")
-    meta(name="keywords", content="github, issue, vote, poll, +1, -1")
-    meta(name="author", content="Maryna Aleksandrova")
+    meta(name="keywords", content="gitpoll, github, issue, vote, poll, +1, -1")
+    meta(name="author", content="Hashobject (team@hashobject.com)")
     link(rel="stylesheet", href="/index.css")
     link(href="/nv.d3.css", rel="stylesheet", type="text/css")
     script
@@ -27,7 +27,7 @@ html(lang="en")
         profileUrl: '#{user.profileUrl}',
         displayName: '#{user.displayName}',
         accessToken: '#{user.accessToken}'
-      };  
+      };
   body
     header.container
       a(href="/")#home.visible
@@ -47,7 +47,7 @@ html(lang="en")
             ol
               li 1. Create new issue on GitHub or GitPoll.
               li 2. Share link to issue with repository collaborators.
-              li 3. Vote on issue and see results as on <a href="http://poll.gitrun.com/emberjs/ember.js/issues/1205">Ember.js</a> repo. 
+              li 3. Vote on issue and see results as on <a href="http://poll.gitrun.com/emberjs/ember.js/issues/1205">Ember.js</a> repo.
             h2.title Feedback
             p If you run into some problem with app or need extra feature please create new issue on <a href="https://github.com/gitrun/poll/issues">GitHub</a> and we will vote on it.
       div.page.invisible#create-poll-page
