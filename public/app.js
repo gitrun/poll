@@ -1,5 +1,5 @@
 $(function(){
-
+  'use strict';
 // LOGIN
   function checkIfUserLoggedIn() {
     var userInfo = getLocalStorageData("lsUserInfo"); //----- lsUserInfo - localStorage user (name of string in LS)
@@ -9,8 +9,6 @@ $(function(){
       }
       else {
         localStorage.setItem("lsUserInfo", JSON.stringify(gp.user));
-
-        mixpanel.track("User Logged-In");
       }
     } else {
       gp.user = userInfo;
@@ -97,8 +95,6 @@ $(function(){
 
         page("/" + url[3] + "/" + url[4] + "/" + url[5] + "/" + url[6]);
       });
-
-      mixpanel.track("Poll Created");
     }
   });
 
@@ -177,15 +173,11 @@ $(function(){
 
           yesArray.push(gp.user.username);
           updatePollResultsView(yesArray, noArray);
-
-          mixpanel.track("Voted +1");
         } else if ($(this).attr('id') == 'no-btn') {
           $.post(urlComments, JSON.stringify(noCommentBody));
 
           noArray.push(gp.user.username);
           updatePollResultsView(yesArray, noArray);
-
-          mixpanel.track("Voted -1");
         }
       });
 
@@ -269,8 +261,6 @@ $(function(){
     showPage("poll-page", function(){
       buildPollPage(urlIssue, urlComments);
     });
-
-    mixpanel.track("Poll Page Loaded");
   });
 
   page('', function(){
@@ -284,7 +274,6 @@ $(function(){
       $("#username").attr("href", gp.user.profileUrl).text(gp.user.username);
 
       showPage("create-poll-page", showUserRepos);
-      mixpanel.track("Create Poll Page Loaded");
     }
   });
 
