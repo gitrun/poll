@@ -68,7 +68,7 @@ app.configure ->
 
 
 app.get '/auth',
-  passport.authenticate('github', scope: 'repo'),
+  passport.authenticate('github', scope: 'public_repo'),
   (req, res) ->
 
 app.get "/", (req, res) ->
