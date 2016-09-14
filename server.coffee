@@ -10,7 +10,6 @@ GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET || "f70b6f1468f4ef87ba18
 
 app = module.exports = express.createServer()
 
-
 passport.serializeUser (user, done) ->
   done(null, user);
 
